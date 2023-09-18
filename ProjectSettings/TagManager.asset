@@ -8,6 +8,10 @@ TagManager:
   - Down
   - Left
   - Right
+  - NE
+  - SE
+  - SW
+  - NW
   layers:
   - Default
   - TransparentFX
