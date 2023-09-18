@@ -7,7 +7,7 @@ public class PlayerScript : MonoBehaviour
     public bool _alive;
     private Rigidbody2D _rigidbody;
     public float _velocity;
-
+    public float _fast;
     public GameObject _up;
     public GameObject _ne;
     public GameObject _right;
@@ -16,57 +16,123 @@ public class PlayerScript : MonoBehaviour
     public GameObject _sw;
     public GameObject _down;
     public GameObject _nw;
+    public GameObject _dead;
 
     // Start is called before the first frame update
     void Start()
     {
         _alive = true;
+        _dead.SetActive(false);
         _rigidbody = GetComponent<Rigidbody2D>();
     }
     // Update is called once per frame
     void Update()
     {
-        
+        // To go Up Left
         if (_alive && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)))
         {
             ChangeRotation('a');
-            _rigidbody.velocity = (Vector2.left * _velocity) + (Vector2.up * _velocity);
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                _rigidbody.velocity = (Vector2.left * _fast) + (Vector2.up * _fast);
+            }
+            else
+            {
+                _rigidbody.velocity = (Vector2.left * _velocity) + (Vector2.up * _velocity);
+            }
         }
+        // To go Up Right
         else if (_alive && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)))
         {
             ChangeRotation('e');
-            _rigidbody.velocity = (Vector2.right * _velocity) + (Vector2.up * _velocity);
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                _rigidbody.velocity = (Vector2.right * _fast) + (Vector2.up * _fast);
+            }
+            else
+            {
+                _rigidbody.velocity = (Vector2.right * _velocity) + (Vector2.up * _velocity);
+            }
         }
+        // To go Down Right
         else if (_alive && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)))
         {
             ChangeRotation('x');
-            _rigidbody.velocity = (Vector2.right * _velocity) + (Vector2.down * _velocity);
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                _rigidbody.velocity = (Vector2.right * _fast) + (Vector2.down * _fast);
+            }
+            else
+            {
+                _rigidbody.velocity = (Vector2.right * _velocity) + (Vector2.down * _velocity);
+            }
         }
+        // To go Down Left
         else if (_alive && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)))
         {
             ChangeRotation('w');
-            _rigidbody.velocity = (Vector2.left * _velocity) + (Vector2.down * _velocity);
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                _rigidbody.velocity = (Vector2.left * _fast) + (Vector2.down * _fast);
+            }
+            else
+            {
+                _rigidbody.velocity = (Vector2.left * _velocity) + (Vector2.down * _velocity);
+            }
         }
+        // To go Up
         else if (_alive && Input.GetKey(KeyCode.W))
         {
             ChangeRotation('u');
-            _rigidbody.velocity = Vector2.up * _velocity;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                _rigidbody.velocity = Vector2.up * _fast;
+            }
+            else
+            {
+                _rigidbody.velocity = Vector2.up * _velocity;
+            }
         }
+        // To go Left
         else if (_alive && Input.GetKey(KeyCode.A))
         {
             ChangeRotation('l');
-            _rigidbody.velocity = Vector2.left * _velocity;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                _rigidbody.velocity = Vector2.left * _fast;
+            }
+            else
+            {
+                _rigidbody.velocity = Vector2.left * _velocity;
+            }
         }
+        // To go Right
         else if (_alive && Input.GetKey(KeyCode.D))
         {
             ChangeRotation('r');
-            _rigidbody.velocity = Vector2.right * _velocity;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                _rigidbody.velocity = Vector2.right * _fast;
+            }
+            else
+            {
+                _rigidbody.velocity = Vector2.right * _velocity;
+            }
         }
+        // To go Down
         else if (_alive && Input.GetKey(KeyCode.S))
         {
             ChangeRotation('d');
-            _rigidbody.velocity = Vector2.down * _velocity;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                _rigidbody.velocity = Vector2.down * _fast;
+            }
+            else
+            {
+                _rigidbody.velocity = Vector2.down * _velocity;
+            }
         }
+        // To stay still
         else
         {
             _rigidbody.velocity -= _rigidbody.velocity;
@@ -84,6 +150,7 @@ public class PlayerScript : MonoBehaviour
             _sw.SetActive(false);
             _down.SetActive(false);
             _nw.SetActive(false);
+            _dead.SetActive(false);
         }
         else if (direction == 'e')
         {
@@ -95,6 +162,7 @@ public class PlayerScript : MonoBehaviour
             _sw.SetActive(false);
             _down.SetActive(false);
             _nw.SetActive(false);
+            _dead.SetActive(false);
         }
         else if (direction == 'r')
         {
@@ -106,6 +174,7 @@ public class PlayerScript : MonoBehaviour
             _sw.SetActive(false);
             _down.SetActive(false);
             _nw.SetActive(false);
+            _dead.SetActive(false);
         }
         else if (direction == 'x')
         {
@@ -117,6 +186,7 @@ public class PlayerScript : MonoBehaviour
             _sw.SetActive(false);
             _down.SetActive(false);
             _nw.SetActive(false);
+            _dead.SetActive(false);
         }
         else if (direction == 'l')
         {
@@ -128,6 +198,7 @@ public class PlayerScript : MonoBehaviour
             _sw.SetActive(false);
             _down.SetActive(false);
             _nw.SetActive(false);
+            _dead.SetActive(false);
         }
         else if (direction == 'w')
         {
@@ -139,6 +210,7 @@ public class PlayerScript : MonoBehaviour
             _sw.SetActive(true);
             _down.SetActive(false);
             _nw.SetActive(false);
+            _dead.SetActive(false);
         }
         else if (direction == 'd')
         {
@@ -150,6 +222,7 @@ public class PlayerScript : MonoBehaviour
             _sw.SetActive(false);
             _down.SetActive(true);
             _nw.SetActive(false);
+            _dead.SetActive(false);
         }
         else if (direction == 'a')
         {
@@ -161,6 +234,7 @@ public class PlayerScript : MonoBehaviour
             _sw.SetActive(false);
             _down.SetActive(false);
             _nw.SetActive(true);
+            _dead.SetActive(false);
         }
         else
         {
@@ -172,6 +246,12 @@ public class PlayerScript : MonoBehaviour
             _sw.SetActive(false);
             _down.SetActive(false);
             _nw.SetActive(false);
+            _dead.SetActive(true);
         }
+    }
+    private void Die()
+    {
+        _alive = false;
+        ChangeRotation('F');
     }
 }

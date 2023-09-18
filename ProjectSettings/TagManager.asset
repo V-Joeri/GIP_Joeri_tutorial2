@@ -12,6 +12,7 @@ TagManager:
   - SE
   - SW
   - NW
+  - Boundary
   layers:
   - Default
   - TransparentFX
