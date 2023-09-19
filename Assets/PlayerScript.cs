@@ -17,6 +17,8 @@ public class PlayerScript : MonoBehaviour
     public GameObject _down;
     public GameObject _nw;
     public GameObject _dead;
+    public AudioSource _src;
+    public AudioClip _spawn, _hit0, _hit1, _killed;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,8 @@ public class PlayerScript : MonoBehaviour
         _alive = true;
         _dead.SetActive(false);
         _rigidbody = GetComponent<Rigidbody2D>();
+        _src.clip = _spawn;
+        _src.Play();
     }
     // Update is called once per frame
     void Update()
@@ -32,7 +36,7 @@ public class PlayerScript : MonoBehaviour
         if (_alive && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)))
         {
             ChangeRotation('a');
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Space))
             {
                 _rigidbody.velocity = (Vector2.left * _fast) + (Vector2.up * _fast);
             }
@@ -45,7 +49,7 @@ public class PlayerScript : MonoBehaviour
         else if (_alive && (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)))
         {
             ChangeRotation('e');
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Space))
             {
                 _rigidbody.velocity = (Vector2.right * _fast) + (Vector2.up * _fast);
             }
@@ -58,7 +62,7 @@ public class PlayerScript : MonoBehaviour
         else if (_alive && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)))
         {
             ChangeRotation('x');
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Space))
             {
                 _rigidbody.velocity = (Vector2.right * _fast) + (Vector2.down * _fast);
             }
@@ -71,7 +75,7 @@ public class PlayerScript : MonoBehaviour
         else if (_alive && (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)))
         {
             ChangeRotation('w');
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Space))
             {
                 _rigidbody.velocity = (Vector2.left * _fast) + (Vector2.down * _fast);
             }
@@ -84,7 +88,7 @@ public class PlayerScript : MonoBehaviour
         else if (_alive && Input.GetKey(KeyCode.W))
         {
             ChangeRotation('u');
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Space))
             {
                 _rigidbody.velocity = Vector2.up * _fast;
             }
@@ -97,7 +101,7 @@ public class PlayerScript : MonoBehaviour
         else if (_alive && Input.GetKey(KeyCode.A))
         {
             ChangeRotation('l');
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Space))
             {
                 _rigidbody.velocity = Vector2.left * _fast;
             }
@@ -110,7 +114,7 @@ public class PlayerScript : MonoBehaviour
         else if (_alive && Input.GetKey(KeyCode.D))
         {
             ChangeRotation('r');
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Space))
             {
                 _rigidbody.velocity = Vector2.right * _fast;
             }
@@ -123,7 +127,7 @@ public class PlayerScript : MonoBehaviour
         else if (_alive && Input.GetKey(KeyCode.S))
         {
             ChangeRotation('d');
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Space))
             {
                 _rigidbody.velocity = Vector2.down * _fast;
             }
@@ -249,9 +253,11 @@ public class PlayerScript : MonoBehaviour
             _dead.SetActive(true);
         }
     }
-    private void Die()
+    public void Die()
     {
         _alive = false;
         ChangeRotation('F');
+        _src.clip = _killed;
+        _src.Play();
     }
 }

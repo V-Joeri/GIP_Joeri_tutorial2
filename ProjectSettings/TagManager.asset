@@ -13,6 +13,7 @@ TagManager:
   - SW
   - NW
   - Boundary
+  - Dead
   layers:
   - Default
   - TransparentFX
