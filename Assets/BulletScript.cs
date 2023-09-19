@@ -6,6 +6,7 @@ public class BulletScript : MonoBehaviour
 {
     private Rigidbody2D _rigidbody;
     private GameObject _player;
+    public int _damage;
 
     // Start is called before the first frame update
     void Start()
@@ -24,11 +25,8 @@ public class BulletScript : MonoBehaviour
     {
         if (collision == _player.GetComponent<Collider2D>())
         {
-            _player.GetComponent<PlayerScript>().Die();
+            _player.GetComponent<PlayerScript>().LoseHP(_damage);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    public int _maxHP;
+    public int _hp;
     public bool _alive;
     private Rigidbody2D _rigidbody;
     public float _velocity;
@@ -23,6 +25,7 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _hp = _maxHP;
         _alive = true;
         _dead.SetActive(false);
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -142,6 +145,7 @@ public class PlayerScript : MonoBehaviour
             _rigidbody.velocity -= _rigidbody.velocity;
         }
     }
+    // Changes player rotation
     private void ChangeRotation(char direction)
     {
         if (direction == 'u')
@@ -253,6 +257,29 @@ public class PlayerScript : MonoBehaviour
             _dead.SetActive(true);
         }
     }
+    public void LoseHP(int damage)
+    {
+        _hp -= damage;
+        if (_hp <= 0)
+        {
+            Die();
+        }
+        else
+        {
+            int rnd = Random.Range(0, 2);
+            if (rnd == 0)
+            {
+                _src.clip = _hit0;
+                _src.Play();
+            }
+            else
+            {
+                _src.clip = _hit1;
+                _src.Play();
+            }
+        }
+    }
+    // Kills the player and ends the game
     public void Die()
     {
         _alive = false;
