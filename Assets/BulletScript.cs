@@ -6,7 +6,7 @@ public class BulletScript : MonoBehaviour
 {
     private Rigidbody2D _rigidbody;
     private GameObject _player;
-    public int _damage;
+    private int _damage;
     public float _speed;
     private Vector2 _spawnPoint;
     private float _timer;
@@ -22,8 +22,14 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _timer += _timer.deltaTime;
+        _timer += Time.deltaTime;
         transform.position = Movement();
+    }
+
+    public void SetDifficulty(int difficulty)
+    {
+        _damage = difficulty;
+        _speed = difficulty;
     }
 
     private Vector2 Movement()
