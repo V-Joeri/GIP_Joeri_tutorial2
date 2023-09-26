@@ -11,38 +11,59 @@ public class BulletSpawner : MonoBehaviour
 
     [Header("Spawner Attributes")]
     private SpawnerType _spawnerType;
+    public bool _spin;
     private float _firingRate;
 
-    private GameObject _spawnedBullet;
+    public GameObject _spawnedBullet;
     private float _timer;
-    private GameObject _logic;
+    public GameObject _logic;
     // Start is called before the first frame update
     void Start()
     {
-        _bullet = GameObject.FindGameObjectWithTag("Bullet");
-        _bullet.SetDifficulty(_logic.GetDifficulty());
-        _spawnedBullet = _bullet;
-        _logic = GameObject.FindGameObjectWithTag("Logic");
-        if (_logic.GetDifficulty() == 3)
+        if (_spin)
         {
-            _firingRate = 0.5;
+            _spawnerType = SpawnerType.Spin;
         }
-        else if (_logic.GetDifficulty() == 2)
+        else
+        {
+            _spawnerType= SpawnerType.Straight;
+        }
+        _bullet.GetComponent<BulletScript>().SetDifficulty(_logic.GetComponent<LogicScript>().GetDifficulty());
+        _spawnedBullet = _bullet;
+        SetFireRate();
+    }
+
+    private void SetFireRate()
+    {
+        if (_logic.GetComponent<LogicScript>().GetDifficulty() == 1)
+        {
+            _firingRate = 2;
+        }
+        else if (_logic.GetComponent<LogicScript>().GetDifficulty() == 2)
         {
             _firingRate = 1;
         }
         else
         {
-            _firingRate = 2;
+            _firingRate = 0.5f;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        SetFireRate();
         _timer += Time.deltaTime;
-        if (_spawnerType == SpawnerType.Spin) transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + 1);
-        if (_timer >= _firingRate)
+        if (_spawnerType == SpawnerType.Spin)
+        {
+            transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + 1);
+            if (_timer >= _firingRate / 2)
+            {
+                Fire();
+                _timer = 0;
+            }
+        }
+        else if (_timer >= _firingRate)
         {
             Fire();
             _timer = 0;

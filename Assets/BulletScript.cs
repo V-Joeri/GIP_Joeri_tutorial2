@@ -18,7 +18,6 @@ public class BulletScript : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player");
         _spawnPoint = new Vector2(transform.position.x, transform.position.y);
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -42,10 +41,10 @@ public class BulletScript : MonoBehaviour
     // What the bullet does on collision
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision == _player.GetComponent<Collider2D>())
+        if (collision == _player.GetComponent<BoxCollider2D>())
         {
             _player.GetComponent<PlayerScript>().LoseHP(_damage);
         }
-        Destroy(gameObject);
+        Destroy(this.gameObject);
     }
 }
